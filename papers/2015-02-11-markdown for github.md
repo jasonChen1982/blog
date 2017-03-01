@@ -95,8 +95,6 @@ talk about `alt` `URL` `Title`
 
 `[blog]:https://github.com/jasonChen1982/blog "github blog"`
 
-[blog]:https://github.com/jasonChen1982/blog "github blog"
-
 #### Same Repertory Link
 
 | syntax                                   | preview                                  |
@@ -106,5 +104,92 @@ talk about `alt` `URL` `Title`
 
 
 
+#### Includes Image
+
+| syntax                                   | preview                                  |
+| ---------------------------------------- | ---------------------------------------- |
+| `[![my-site]](http://jason82.com/)`      | [![my-site]](http://jason82.com/)        |
+| `[![](http://jason82.com/static/imgs/contect2.png "")][blog]` | [![](http://jason82.com/static/imgs/contect2.png "")][blog] |
+| `[![blog-logo]][blog]`                   | [![blog-logo]][blog]                     |
 
 
+
+##  Anchor
+
+| syntax                           | preview                        |
+| -------------------------------- | ------------------------------ |
+| `[Back To Top](##dividing line)` | [Back To Top](##dividing line) |
+
+
+
+## List Style
+
+#### Unordered List
+
+* xxx: yyyy
+* xxx: yyyy
+
+#### Order List
+
+1. xxx
+2. yyy
+3. zzz
+
+#### Multilevel Unordered List
+
+* xxx
+  * yyy
+    * xxx
+
+#### Multilevel Ordered List
+
+1. xxx
+   1. yyy
+      1. zzz
+
+#### CheckBox
+
+- [x] learn
+- [x] do
+- [x] hard
+
+- [ ] plan
+
+## Quotes
+
+`>xxxx`
+
+> xxx
+>
+> this is yyy
+
+`>>xxxx`
+
+> > xxx
+> >
+> > this is depth yyy
+
+
+
+## Highlight
+
+```javascript
+const point = new Point2D(0, 10);
+const vector ＝ new Vector3D(1, 0, 0);
+vector.normalize();
+```
+
+
+
+## Emoji
+
+`:blush:` ​:blush:​
+
+
+
+
+
+[blog]:https://github.com/jasonChen1982/blog "github blog"
+[zhihu]:https://www.zhihu.com/people/jasonchen1982 "zhihu"
+[blog-logo]:http://jason82.com/static/imgs/contect2.png "zhihu"
+[logo]:https://www.zhihu.com/people/jasonchen1982 "zhihu"
