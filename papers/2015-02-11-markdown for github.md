@@ -5,6 +5,7 @@ date: 2015-02-11
 
 # SOME ABOUT GitHub Flavored Markdown
 
+
 ## Dividing line
 
 `***` `---` `___` can display as boldface line 
@@ -14,6 +15,7 @@ date: 2015-02-11
 ---
 
 ___
+
 
 ## Multilevel Title
 
@@ -28,6 +30,7 @@ ___
 ##### `#####` h5
 
 ###### `######` h6
+
 
 ## Text Area
 
@@ -49,6 +52,7 @@ use ``` at the text block before and after
 
 `opengl es` `WebGL` `canvas` `some` `i` `love`
 
+
 ## Word Break
 
 add `2 space` at pre-line
@@ -66,6 +70,7 @@ insert a empty line at before and after
 | `~~Delete~~`          | ~~Delete~~        |
 
 text effect can add-on with each other
+
 
 ## Inludes Image
 
