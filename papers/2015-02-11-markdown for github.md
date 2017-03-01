@@ -185,7 +185,7 @@ vector.normalize();
 `:blush:` ​:blush:​
 
 
-
+<sup><sub> thanks for Jelly.K.Wang`s readme </sub></sup>
 
 
 [blog]:https://github.com/jasonChen1982/blog "github blog"
