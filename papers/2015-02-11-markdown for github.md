@@ -101,8 +101,8 @@ talk about `alt` `URL` `Title`
 
 | syntax                                   | preview                                  |
 | ---------------------------------------- | ---------------------------------------- |
-| `[paper]|(/papers)`                      | [paper]\|(/papers)                       |
-| `[file]|(/papers/2015-02-11-markdown for github.md)` | [file]\|(/papers/2015-02-11-markdown for github.md) |
+| `[paper](/papers)`                       | [paper](/papers)                         |
+| `[file](/papers/2015-02-11-markdown for github.md)` | [file](/papers/2015-02-11-markdown for github.md) |
 
 
 
