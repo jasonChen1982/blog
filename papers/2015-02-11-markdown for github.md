@@ -152,7 +152,6 @@ talk about `alt` `URL` `Title`
 - [x] learn
 - [x] do
 - [x] hard
-
 - [ ] plan
 
 ## Quotes
