@@ -3,9 +3,9 @@ title: markdown for GitHub Flavored Markdown
 date: 2015-02-11
 ---
 
-## SOME ABOUT GitHub Flavored Markdown
+# SOME ABOUT GitHub Flavored Markdown
 
-### Dividing line
+## Dividing line
 
 `***` `---` `___` can display as boldface line 
 
@@ -15,7 +15,7 @@ date: 2015-02-11
 
 ___
 
-### Multilevel Title
+## Multilevel Title
 
 # `#` h1
 
@@ -29,7 +29,7 @@ ___
 
 ###### `######` h6
 
-### Text Area
+## Text Area
 
 ##### Normal Text
 
@@ -49,7 +49,7 @@ use ``` at the text block before and after
 
 `opengl es` `WebGL` `canvas` `some` `i` `love`
 
-### Word Break
+## Word Break
 
 add `2 space` at pre-line
 
@@ -67,7 +67,7 @@ insert a empty line at before and after
 
 text effect can add-on with each other
 
-### Inludes Image
+## Inludes Image
 
 syntax
 
