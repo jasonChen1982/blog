@@ -72,7 +72,9 @@ insert a empty line at before and after
 text effect can add-on with each other
 
 
-## Inludes Image
+## Inline Link & Inludes Image
+
+#### Inline Link
 
 syntax
 
@@ -94,6 +96,15 @@ talk about `alt` `URL` `Title`
 `[blog]:https://github.com/jasonChen1982/blog "github blog"`
 
 [blog]:https://github.com/jasonChen1982/blog "github blog"
+
+#### Same Repertory Link
+
+| syntax                                   | preview                                  |
+| ---------------------------------------- | ---------------------------------------- |
+| `[paper]|(/papers)`                      | [paper]\|(/papers)                       |
+| `[file]|(/papers/2015-02-11-markdown for github.md)` | [file]\|(/papers/2015-02-11-markdown for github.md) |
+
+
 
 
 
