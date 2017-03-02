@@ -184,6 +184,12 @@ vector.normalize();
 
 `:blush:` ​:blush:​
 
+## Details
+
+<details>
+### First
+### Third
+</details>
 
 <sup><sub> thanks for Jelly.K.Wang`s readme </sub></sup>
 
