@@ -56,3 +56,5 @@ process.exit(0);
 process.exit(1);
 ```
 拒绝这次提交
+
+##### 除了`husky`，`pre-commit`模块也可以修改`.git/hooks`，具体就不介绍了。
