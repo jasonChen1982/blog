@@ -8,4 +8,4 @@
 - [ ] [现代浏览器渲染流水线](https://github.com/jasonChen1982/blog/blob/master/papers/2015-07-10-现代浏览器渲染流水线.md)
 - [ ] [光线追踪](https://github.com/jasonChen1982/blog/blob/master/papers/2015-10-02-光线追踪.md)
 - [ ] [react入坑](https://github.com/jasonChen1982/blog/blob/master/papers/2016-02-20-react入坑.md)
-- [x] [利用husky和validate-commit-msg规范化提交信息](https://github.com/jasonChen1982/blog/blob/master/papers/2017-02-14-利用husky和validate-commit-msg规范化提交信息)
+- [x] [利用husky和validate-commit-msg规范化提交信息](https://github.com/jasonChen1982/blog/blob/master/papers/2017-02-14-利用husky和validate-commit-msg规范化提交信息.md)
