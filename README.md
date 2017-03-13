@@ -1,11 +1,11 @@
 # blog & article & talk
 
 ## Papers list
-- [] [首次入坑svg](https://jasonchen1982.github.io/blog/papers/2014-12-01-首次入坑svg.md)
-- [] [安装node入坑之先入npm预备坑]()
-- [] [npm模块安装]()
-- [*] [markdown for github]()
-- [] [现代浏览器渲染流水线]()
-- [] [光线追踪]()
-- [] [react入坑]()
-- [*] [利用husky和validate-commit-msg规范化提交信息](https://jasonchen1982.github.io/blog/papers/2017-02-14-利用husky和validate-commit-msg规范化提交信息)
+- [ ] [首次入坑svg](https://github.com/jasonChen1982/blog/blob/master/papers/2014-12-01-首次入坑svg.md)
+- [ ] [安装node入坑之先入npm预备坑](https://github.com/jasonChen1982/blog/blob/master/papers/2015-01-10-安装node入坑之先入npm预备坑.md)
+- [ ] [npm模块安装](https://github.com/jasonChen1982/blog/blob/master/papers/2015-01-11-npm模块安装.md)
+- [x] [markdown for github](https://github.com/jasonChen1982/blog/blob/master/papers/2015-02-11-markdown for github.md)
+- [ ] [现代浏览器渲染流水线](https://github.com/jasonChen1982/blog/blob/master/papers/2015-07-10-现代浏览器渲染流水线.md)
+- [ ] [光线追踪](https://github.com/jasonChen1982/blog/blob/master/papers/2015-10-02-光线追踪.md)
+- [ ] [react入坑](https://github.com/jasonChen1982/blog/blob/master/papers/2016-02-20-react入坑.md)
+- [x] [利用husky和validate-commit-msg规范化提交信息](https://github.com/jasonChen1982/blog/blob/master/papers/2017-02-14-利用husky和validate-commit-msg规范化提交信息)
