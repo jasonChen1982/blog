@@ -22,6 +22,7 @@
   "config": {
     "validate-commit-msg": {
       "types": [
+        "feat",
         "create",
         "finish",
         "update",
