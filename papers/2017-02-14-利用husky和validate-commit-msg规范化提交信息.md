@@ -60,15 +60,15 @@ date: 2017-02-14
 
 嗯～
 
-接下来validate-commit-msg该出场了，validate-commit-msg的作用就是获取到`.git/COMMIT_EDITMSG`的内容，也就是你最近一次提交的信息。然后进行相应的格式化校验，如果校验通过则执行
+接下来`validate-commit-msg`该出场了，`validate-commit-msg`的作用就是获取到git工具的`.git/COMMIT_EDITMSG`的内容，也就是你最近一次提交信息。然后进行相应的格式化校验，如果校验通过则执行
 
 ```javascript
 process.exit(0);
 ```
-否则执行
+否则拒绝这次提交执行
 ```javascript
 process.exit(1);
 ```
-拒绝这次提交
 
-##### 除了`husky`，`pre-commit`模块也可以修改`.git/hooks`，具体就不介绍了。
+
+##### 当然除了`husky`模块外，`pre-commit`模块也可以注册`.git/hooks`，同样可以配合`validate-commit-msg`来完成校验，具体就不介绍了。
