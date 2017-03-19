@@ -4,7 +4,7 @@
 - [ ] [首次入坑svg](https://github.com/jasonChen1982/blog/blob/master/papers/2014-12-01-首次入坑svg.md)
 - [ ] [安装node入坑之先入npm预备坑](https://github.com/jasonChen1982/blog/blob/master/papers/2015-01-10-安装node入坑之先入npm预备坑.md)
 - [ ] [npm模块安装](https://github.com/jasonChen1982/blog/blob/master/papers/2015-01-11-npm模块安装.md)
-- [x] [markdown for github](https://github.com/jasonChen1982/blog/blob/master/papers/2015-02-11-markdown for github.md)
+- [x] [markdown for github](https://github.com/jasonChen1982/blog/blob/master/papers/2015-02-11-markdown%20for%20github.md)
 - [ ] [现代浏览器渲染流水线](https://github.com/jasonChen1982/blog/blob/master/papers/2015-07-10-现代浏览器渲染流水线.md)
 - [ ] [光线追踪](https://github.com/jasonChen1982/blog/blob/master/papers/2015-10-02-光线追踪.md)
 - [ ] [karma使用记录](https://github.com/jasonChen1982/blog/blob/master/papers/2015-11-15-karma使用记录.md)
