@@ -1,0 +1,36 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "just a simple blog",
+  "main": "index.js",
+  "scripts": {
+    "commitmsg": "validate-commit-msg"
+  },
+  "pre-commit": [
+    "commitmsg"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jasonChen1982/blog.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jasonChen1982/blog/issues"
+  },
+  "homepage": "https://github.com/jasonChen1982/blog#readme",
+  "config": {
+    "validate-commit-msg": {
+      "types": [
+        "create",
+        "finish",
+        "update",
+        "chore"
+      ]
+    }
+  },
+  "devDependencies": {
+    "pre-commit": "^1.2.2",
+    "validate-commit-msg": "^2.11.2"
+  }
+}
