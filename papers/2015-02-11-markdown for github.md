@@ -191,7 +191,20 @@ vector.normalize();
 ### Third
 </details>
 
-<sup><sub> thanks for Jelly.K.Wang`s readme </sub></sup>
+## Others
+now `GFM` support html layout tags and simple css style, just like following:
+```html
+<div align="center">
+  <a href="https://github.com/jcc2d">
+    <img width="200" heigth="200" src="https://github.com/jcc2d/logo.svg">
+  </a>
+  <br>
+  <h1>jcc2d</h1>
+  <p>
+    jcc2d is A lightweight canvas 2d renderer & An build-in awesome animator.
+  <p>
+</div>
+``` 
 
 
 [blog]:https://github.com/jasonChen1982/blog "github blog"
