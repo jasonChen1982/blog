@@ -21,8 +21,12 @@ author: https://github.com/woshi82
 ##### 优势
 
 1. 有JS的功底就可以写APP，而且可以兼容IOS、Android,很是酷炫。
+
 2. 具有React的优势，数据驱动，高度组件化，很好的管理应用数据，性能好。
+
 3. 生态圈够大，维护者很多，编写应用中遇到的问题，大多都可以到github、stackoverflow上找到解决方案，连一些原生的东西都很多。
+
+   ## 
 
 #### 构建react-native应用的技术栈
 
@@ -38,17 +42,83 @@ author: https://github.com/woshi82
 
 前面说到的 redux是可以结合许多前端界面库一起应用在项目中。 其中在react中，官方推崇 `react-redux`  对 redux进行相互绑定。它运用 react 高阶组件的思维，将redux快速注入到项目中。
 
-sagas 是处理   整个应用开发中，处理异步数据是一个通用的功能，
+`sagas`  是一种长事物模型，系统内管理side-effects的途径,  系统中需要协程多个action和side-effects。可以理解成与系统交互的永久线程，就是做了以下三项工作：对中的acion dispach事件做出反应 、dispach新的actions、在没有action被dispath的情况下能够运用内部机制进行自我苏醒
 
-`redux-sagas` 是将sagas 快速注入redux 中。
+在`redux-sagas`中,saga是一个个的generator函数，能够无限次运行在系统中，当action被dispath 的时候，它能够唤起相应的操作。在项目中主要是结合数据请求进行数据的异步操作。除此之外，他也可以做所有与state相关的异步操作，这样保持视图和action creator 是纯函数
+
+## 
 
 #### 搭建开发环境
 
+## 
+
 #### 文件结构
+
+```
+iuwei/                      	# project name
+|-- android/                    # android源文件及配置
+    |-- build.gradle        	# app编译配置
+    |-- app/     
+        |-- build.gradle        # 项目编译配置
+        |-- build/ 
+            |-- outputs         # 打包编译输出文件
+        |-- src/ 				# android 原生代码
+            |-- java         	# java包
+            |-- res         	# app icon、name
+            |-- AndroidManifest.xml         # android 清单
+    ···
+|-- ios/                        # ios源文件及配置
+    |-- iuwei/     
+        |-- AppDelegate.m       # m 头文件 @private
+        |-- AppDelegate.h       # h 头文件 @protected
+        |-- Info.plist          # app配置项
+        |-- Images.xcassets          # app icon、launchImage
+    ···
+    ···更多配置项打开xcode进行可视化配置
+    
+|-- js/                         # 前端js 文件
+  |-- actions/                	# redux action
+      |-- index               	# action 入口文件
+      ···
+  |-- reducers/               	# redux reducers
+      |-- index               	# reducer 入口文件
+      ···
+  |-- store/                  	# redux store
+      |-- configureStore.js   	# store 配置文件
+      ···                     	# 中间件
+  |-- sagas/                 	# sagas
+  |-- services/                 # 请求接口
+  |-- utils/                 	# 通用工具函数
+  |-- common/                 	# 通用组件文件
+  |-- modules/                  # 模块组件
+  |-- setup.js                	# redux注入文件
+  |-- App.js            		# 组件主入口
+  |-- AppNavigator.js      		# 导航
+|-- update.json                 # 热更新配置文件
+|-- index.android.js            # android入口文件
+|-- index.ios.js                # ios入口文件
+|-- package.json                # 管理项⽬的依赖
+|-- .babelrc               		# babel编译配置
+|-- .editorconfig               # ediforconfig 代码书写配置
+|-- .eslintrc                   # eslint 代码规范性检查配置
+|-- .gitignore                  # git 仓库文件忽略配置
+```
+
+## 
 
 #### 构建项目框架的思路
 
+react的是一个以数据驱动的框架，官方为了不让组件过于复杂，推出了在一个小组件中将HTML、css 写在一个js文件中，但是在复杂逻辑当中，组件会显得杂乱，父子组件的交互也不利于后期的维护，所以最初的想法是一定要用一个框架专门来管理数据，这样，每个组件文件会显得纯净一些。所以选择了官方推出的redux。
+
+当然在引入redux的时候，又遇到另外一个问题，怎样处理异步请求？在做react-native 的最初版demo的时候，通过redux中的middleware（有很多柯里化的编码思维）, 写了一个通用的请求中间件，当然官方也有一些中间件可以实现dispath 函数，实现promise等等，这写中间件完全可以满足普通的开发需求。
+
+但是当要真正做一个项目应用的时候会发现很多问题。就只是说异步请求数据方面，占了很大的一部分，接口很多，而且用户的很多操作都需要进行数据请求：一个交互需要要进行多个数据请求，这些请求需要是并发，或同步进行，有时需要在请求回来的数据中，在进行state的数据操作，接着可能要继续进行请求。第一反应当然是要优化middleware request.js ,但是要实现着么多种功能需求，一般的参数封装显然是不符合正常的编码思维的。
+
+于是找到了一款优秀的处理异步的框架 redux-sagas.它可以实现上述异步请求数据的需求，之后再把所有的接口请求提取出来，从而实现了代码功能块的分离。
+
 #### redux数据流。
+
+
 
 #### react的组件化思维
 
