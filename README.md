@@ -1,7 +1,7 @@
 # blog & article & talk
 
 ## Papers list
-- [ ] [首次入坑svg](https://github.com/jasonChen1982/blog/blob/master/papers/2014-12-01-首次入坑svg.md)
+- [x] [首次入坑svg](https://github.com/jasonChen1982/blog/blob/master/papers/2014-12-01-首次入坑svg.md)
 
 - [ ] [安装node入坑之先入npm预备坑](https://github.com/jasonChen1982/blog/blob/master/papers/2015-01-10-安装node入坑之先入npm预备坑.md)
 - [ ] [npm模块安装](https://github.com/jasonChen1982/blog/blob/master/papers/2015-01-11-npm模块安装.md)
