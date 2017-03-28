@@ -8,7 +8,7 @@
 
 ### Papers of 2015
 
-- [ ] [安装node和使用](https://github.com/jasonChen1982/blog/blob/master/papers/2015-01-10-安装node和使用.md)
+- [x] [安装node和使用](https://github.com/jasonChen1982/blog/blob/master/papers/2015-01-10-安装node和使用.md)
 - [ ] [npm模块安装](https://github.com/jasonChen1982/blog/blob/master/papers/2015-01-11-npm模块安装.md)
 - [x] [markdown for github](https://github.com/jasonChen1982/blog/blob/master/papers/2015-02-11-markdown%20for%20github.md)
 - [x] [前端性能优化](https://github.com/jasonChen1982/blog/blob/master/papers/2015-03-14-前端性能优化.md)
