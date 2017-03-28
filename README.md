@@ -17,7 +17,6 @@
 - [x] [光线追踪](https://github.com/jasonChen1982/blog/blob/master/papers/2015-10-02-光线追踪.md)
 - [ ] [Chrome Exrension开发记录](https://github.com/jasonChen1982/blog/blob/master/papers/2015-10-16-Chrome%20Exrension开发记录.md)
 - [ ] [karma使用记录](https://github.com/jasonChen1982/blog/blob/master/papers/2015-11-15-karma使用记录.md)
-
 - [ ] [http2相关内容](https://github.com/jasonChen1982/blog/blob/master/papers/2015-11-20-http2相关内容.md)
 - [ ] [webpack理解](https://github.com/jasonChen1982/blog/blob/master/papers/2015-11-22-webpack理解.md)
 - [ ] [http2的一些理解](https://github.com/jasonChen1982/blog/blob/master/papers/2015-12-02-http2的一些理解.md)
