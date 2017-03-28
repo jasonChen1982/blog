@@ -187,8 +187,8 @@ vector.normalize();
 ## Details
 
 <details>
-### First
-### Third
+<summary>Some Details Here</summary>
+can`t support markdown
 </details>
 
 ## Others
