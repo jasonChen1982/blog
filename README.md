@@ -31,6 +31,7 @@
 - [ ] [rollup使用记录](https://github.com/jasonChen1982/blog/blob/master/papers/2016-06-10-rollup使用记录.md)
 - [ ] [为站点配置HTTPS服务](https://github.com/jasonChen1982/blog/blob/master/papers/2016-08-20-为站点配置HTTPS服务.md)
 - [ ] [Charles使用记录](https://github.com/jasonChen1982/blog/blob/master/papers/2016-11-02-Charles使用记录.md)
+- [x] [lighthouse使用记录](https://github.com/jasonChen1982/blog/blob/master/papers/2016-12-23-lighthouse使用记录.md)
 
 ### Papers of 2017
 
