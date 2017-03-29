@@ -4,6 +4,7 @@
   "description": "just a simple blog",
   "main": "index.js",
   "scripts": {
+    "build": "node ./scripts/build.js",
     "commitmsg": "validate-commit-msg"
   },
   "pre-commit": [
