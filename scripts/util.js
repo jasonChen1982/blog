@@ -37,7 +37,6 @@ function warpPaper(paper) {
     result.url = encodeURI(config.prefix + paper);
     mark = result.finished ? 'x' : ' ';
     result.item = `- [${mark}] [${result.title}](${result.url})`;
-    // console.log(result);
     return result;
 }
 
@@ -74,12 +73,9 @@ function updatedMD(papers) {
         paper.papers.forEach(function(it){
             result.push(it.item);
         })
-        // result.push();
         result.push('');
     }
 
-    // console.log(result);
-    // console.log(md);
     fs.writeFileSync(readmePath, result.join('\n'));
 }
 
