@@ -13,27 +13,36 @@ function groupingByYear(samples) {
     samples.forEach(function (it, id) {
         const keys = it.match(dateReg);
         if (keys && keys.length > 1) {
-            const year = keys[1];
-            if (year !== preCache.year) {
-                if (preCache.year) {
-                    result.push(Object.assign({}, preCache));
+            const times = keys[0].replace(/-/g, '') - 0;
+            const time = keys[1] - 0;
+            if (time !== preCache.time) {
+                if (preCache.time) {
+                    ship();
                 }
-                preCache.year = year;
+                preCache.time = time;
                 preCache.papers = [];
             }
-            preCache.papers.push(warpPaper(it));
+            preCache.papers.push(warpPaper(it, times));
         }
     })
-    result.push(Object.assign({}, preCache));
+    ship();
+    sortFn(result, config.sortOrder.years);
+
+    function ship(){
+        sortFn(preCache.papers, config.sortOrder.papers);
+        result.push(Object.assign({}, preCache));
+    }
     return result;
 }
 
-function warpPaper(paper) {
+
+function warpPaper(paper, time) {
     const result = {};
     let mark = ' ';
     result.finished = checkStatus(paper);
     result.paper = paper;
     result.title = paper.replace(/(\d{4})-\d{1,2}-\d{1,2}-|\.md/g, '');
+    result.time = time;
     result.url = encodeURI(config.prefix + paper);
     mark = result.finished ? 'x' : ' ';
     result.item = `- [${mark}] [${result.title}](${result.url})`;
@@ -65,7 +74,7 @@ function updatedMD(papers) {
     for (let j = 0; j < papers.length; j++) {
         const paper = papers[j];
         if (paper.year !== preYear) {
-            preYear = paper.year;
+            preYear = paper.time;
             result.push('### Papers of ' + preYear);
             result.push('');
         }
@@ -76,6 +85,19 @@ function updatedMD(papers) {
     }
 
     fs.writeFileSync(readmePath, result.join('\n'));
+}
+
+
+function sortFn(arr, order) {
+    arr.sort((a, b)=>{
+        if (a.time < b.time) {
+            return order;
+        }
+        if (a.time > b.time) {
+            return -order;
+        }
+        return 0;
+    });
 }
 
 exports.groupingByYear = groupingByYear;

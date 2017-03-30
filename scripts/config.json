@@ -1,3 +1,7 @@
 {
-    "prefix": "https://github.com/jasonChen1982/blog/blob/master/papers/"
+    "prefix": "https://github.com/jasonChen1982/blog/blob/master/papers/",
+    "sortOrder": {
+        "years": 1,
+        "papers": 1
+    }
 }
