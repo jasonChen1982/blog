@@ -11,7 +11,7 @@
 - [x] [安装node和使用](https://github.com/jasonChen1982/blog/blob/master/papers/2015-01-10-%E5%AE%89%E8%A3%85node%E5%92%8C%E4%BD%BF%E7%94%A8.md)
 - [x] [npm模块安装](https://github.com/jasonChen1982/blog/blob/master/papers/2015-01-11-npm%E6%A8%A1%E5%9D%97%E5%AE%89%E8%A3%85.md)
 - [ ] [UNIX下常用的命令](https://github.com/jasonChen1982/blog/blob/master/papers/2015-01-20-UNIX%E4%B8%8B%E5%B8%B8%E7%94%A8%E7%9A%84%E5%91%BD%E4%BB%A4.md)
-- [ ] [markdown for github](https://github.com/jasonChen1982/blog/blob/master/papers/2015-02-11-markdown%20for%20github.md)
+- [x] [markdown for github](https://github.com/jasonChen1982/blog/blob/master/papers/2015-02-11-markdown%20for%20github.md)
 - [x] [前端性能优化](https://github.com/jasonChen1982/blog/blob/master/papers/2015-03-14-%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96.md)
 - [ ] [Google Codelabs系列](https://github.com/jasonChen1982/blog/blob/master/papers/2015-04-09-Google%20Codelabs%E7%B3%BB%E5%88%97.md)
 - [ ] [现代浏览器渲染流水线](https://github.com/jasonChen1982/blog/blob/master/papers/2015-07-10-%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E6%B5%81%E6%B0%B4%E7%BA%BF.md)

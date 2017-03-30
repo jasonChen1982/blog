@@ -41,15 +41,13 @@ function warpPaper(paper) {
 }
 
 function checkStatus(paper) {
+    const paperFile = fs.readFileSync(path.resolve(cwd, 'papers', paper), 'utf8');
+    const reg = /\nstatus:\s?(\w+)\s?\n?/;
+    const regFinished = /finish(ed)?/;
     let result = false;
-    const reg = /\-\s\[(\s|x)]\s/;
-    const paperAfterEncode = encodeURI(paper);
-    md.forEach(function (it, id) {
-        if (reg.test(it) && it.indexOf(paperAfterEncode) > -1) {
-            const place = it.match(reg)[1];
-            result = place === 'x' ? true : false ;
-        }
-    })
+    if (reg.test(paperFile)) {
+        result = regFinished.test(paperFile.match(reg)[1]) ? true : false ;
+    }
     return result;
 }
 

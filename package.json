@@ -23,8 +23,8 @@
   "config": {
     "validate-commit-msg": {
       "types": [
-        "feat",
-        "create",
+        "todo",
+        "doing",
         "finish",
         "update",
         "chore"
