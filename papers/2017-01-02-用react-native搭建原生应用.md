@@ -1,6 +1,7 @@
 ---
 title: 用react-native搭建原生应用 (iuwei)
 date: 2017-01-02
+status: doing
 author: https://github.com/woshi82
 ---
 

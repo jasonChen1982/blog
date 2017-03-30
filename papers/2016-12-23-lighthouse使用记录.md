@@ -1,6 +1,7 @@
 ---
 title: lighthouse使用记录
 date: 2016-12-22
+status: finished
 ---
 
 ## lighthouse

@@ -1,6 +1,7 @@
 ---
 title: 利用husky和validate-commit-msg规范化提交信息
 date: 2017-02-14
+status: finished
 ---
 #### 为什么要规范化commit-msg
 
