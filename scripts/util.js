@@ -43,8 +43,9 @@ function warpPaper(paper) {
 function checkStatus(paper) {
     let result = false;
     const reg = /\-\s\[(\s|x)]\s/;
+    const paperAfterEncode = encodeURI(paper);
     md.forEach(function (it, id) {
-        if (reg.test(it) && it.indexOf(paper) > -1) {
+        if (reg.test(it) && it.indexOf(paperAfterEncode) > -1) {
             const place = it.match(reg)[1];
             result = place === 'x' ? true : false ;
         }
