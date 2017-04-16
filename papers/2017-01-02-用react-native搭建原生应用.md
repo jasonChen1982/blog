@@ -70,7 +70,7 @@ iuwei/                      	# project name
     ···
 |-- ios/                        # ios源文件及配置
     |-- iuwei/     
-        |-- AppDelegate.m       # m 头文件 @private
+        |-- AppDelegate.m       # m 文件 @private
         |-- AppDelegate.h       # h 头文件 @protected
         |-- Info.plist          # app配置项
         |-- Images.xcassets          # app icon、launchImage
