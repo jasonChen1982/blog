@@ -3,7 +3,7 @@ const cwd = process.cwd();
 const fs = require('fs');
 const path = require('path');
 
-const readmePath = path.resolve(cwd, 'README.md');
+const readmePath = require.resolve('../README.md');
 const md = fs.readFileSync(readmePath, 'utf8').split('\n');
 
 function groupingByYear(samples) {

@@ -32,6 +32,7 @@
     }
   },
   "devDependencies": {
+    "paper-mill": "^1.0.2",
     "pre-commit": "^1.2.2",
     "validate-commit-msg": "^2.11.2"
   }
