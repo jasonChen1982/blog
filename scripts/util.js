@@ -79,7 +79,7 @@ function updatedMD(papers) {
             result.push('');
         }
         paper.papers.forEach(function(it){
-            result.push(it.item);
+            if (it.finished) result.push(it.item);
         })
         result.push('');
     }

@@ -3,5 +3,6 @@
     "sortOrder": {
         "years": 1,
         "papers": 1
-    }
+    },
+    "justShowFinished": true
 }
