@@ -4,7 +4,8 @@
   "description": "just a simple blog",
   "main": "index.js",
   "scripts": {
-    "build": "node ./scripts/build.js",
+    "paper": "papers paper",
+    "build": "papers build",
     "commitmsg": "validate-commit-msg"
   },
   "pre-commit": [
@@ -32,7 +33,7 @@
     }
   },
   "devDependencies": {
-    "paper-mill": "^1.0.2",
+    "paper-mill": "^1.1.0",
     "pre-commit": "^1.2.2",
     "validate-commit-msg": "^2.11.2"
   }
