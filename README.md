@@ -24,3 +24,4 @@
 ### Papers of 2014
 
 - [x] [首次入坑svg](https://github.com/jasonChen1982/blog/blob/master/papers/2014-12-01-%E9%A6%96%E6%AC%A1%E5%85%A5%E5%9D%91svg.md)
+- [x] [关于papers脚手架工具](https://github.com/jasonChen1982/blog/blob/master/papers/2014-11-19-%E5%85%B3%E4%BA%8Epapers%E8%84%9A%E6%89%8B%E6%9E%B6%E5%B7%A5%E5%85%B7.md)
