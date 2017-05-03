@@ -4,6 +4,7 @@
 
 ### Papers of 2017
 
+- [x] [微信分享SPA应用小图标不能显示问题](https://github.com/jasonChen1982/blog/blob/master/papers/2017-05-03-%E5%BE%AE%E4%BF%A1%E5%88%86%E4%BA%ABSPA%E5%BA%94%E7%94%A8%E5%B0%8F%E5%9B%BE%E6%A0%87%E4%B8%8D%E8%83%BD%E6%98%BE%E7%A4%BA%E9%97%AE%E9%A2%98.md)
 - [x] [jcc2d的AE导出动画](https://github.com/jasonChen1982/blog/blob/master/papers/2017-04-15-jcc2d%E7%9A%84AE%E5%AF%BC%E5%87%BA%E5%8A%A8%E7%94%BB.md)
 - [x] [利用husky和validate-commit-msg规范化提交信息](https://github.com/jasonChen1982/blog/blob/master/papers/2017-02-14-%E5%88%A9%E7%94%A8husky%E5%92%8Cvalidate-commit-msg%E8%A7%84%E8%8C%83%E5%8C%96%E6%8F%90%E4%BA%A4%E4%BF%A1%E6%81%AF.md)
 
