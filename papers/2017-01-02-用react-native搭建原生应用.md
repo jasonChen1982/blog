@@ -83,45 +83,45 @@ import {
 } from 'react-native';
 import Header from '../../common/Header';
 export default class LoginLayout extends Component {
-	loginHandler = () => {}
-	render() {
-		return (
-			<View style={styles.container}>
-				<Text style={styles.name}>iuwei.</Text>
-				<TextInput
-					style={styles.input}
-					placeholder="用户名"
-					autoFocus
-					returnKeyType="next"
-					onSubmitEditing={() => {this.password.focus();}}
-				/>
-				<TextInput
-					style={styles.input}
-					ref={(r) => {this.password = r;}}
-					placeholder="密码"
-					enablesReturnKeyAutomatically  //未输入时键盘的确定按钮不能点
-					returnKeyType="done"
-					blurOnSubmit   // 点击键盘的确定 收起键盘
-					onSubmitEditing={() => {this.loginHandler(); }}
-				/>
-				<TouchableOpacity style={styles.btn} onPress={this.loginHandler}>
-					<Text style={styles.btnText}>登录</Text>
-				</TouchableOpacity>
-				<TouchableOpacity>
-					<Text style={styles.forget}>忘记密码?</Text>
-				</TouchableOpacity>
-			</View>
-		);
-	}
+  loginHandler = () => {}
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.name}>iuwei.</Text>
+        <TextInput
+            style={styles.input}
+            placeholder="用户名"
+            autoFocus
+            returnKeyType="next"
+            onSubmitEditing={() => {this.password.focus();}}
+        />
+        <TextInput
+            style={styles.input}
+            ref={(r) => {this.password = r;}}
+            placeholder="密码"
+            enablesReturnKeyAutomatically  //未输入时键盘的确定按钮不能点
+            returnKeyType="done"
+            blurOnSubmit   // 点击键盘的确定 收起键盘
+            onSubmitEditing={() => {this.loginHandler(); }}
+        />
+        <TouchableOpacity style={styles.btn} onPress={this.loginHandler}>
+          <Text style={styles.btnText}>登录</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Text style={styles.forget}>忘记密码?</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
 }
 const styles = StyleSheet.create({
-	container: {
-        flex: 1,
-        paddingLeft: 20,
-        paddingRight: 20,
-        paddingTop: 100,
-	},
-	...
+  container: {
+    flex: 1,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 100,
+  },
+  ...
 });
 ```
 
@@ -275,37 +275,57 @@ m1 begin > m2 begin > m2 end > m1 end
 
 ```javascript
 function n1(store){
-		return function(next){
-				return function(action) {
-						console.log('n1 begin');
-						next(action);
-						console.log('n1 end');
-				};
-		};
+    return function(next){
+        return function(action) {
+            console.log('n1 begin');
+            next(action);
+            console.log('n1 end');
+        };
+    };
 }
 function n2(store){
     return function(next){
-            return function(action) {
-                    console.log('n2 begin');
-                    next(action);
-                    console.log('n2 end');
-            };
+        return function(action) {
+            console.log('n2 begin');
+            next(action);
+            console.log('n2 end');
+        };
     };
 }
 function applyMiddlewareSimilar(store, ...middlewares) {
-		middlewares = middlewares.slice();
-		middlewares.reverse();
+    middlewares = middlewares.slice();
+    middlewares.reverse();
 
-		let dispatch = store.dispatch;
-		// 在每一个 middleware 中变换 dispatch 方法。
-		middlewares.forEach(middleware =>
-				dispatch = middleware(store)(dispatch)
-		);
-		return Object.assign({}, store, { dispatch })
+    let dispatch = store.dispatch;
+    // 在每一个 middleware 中变换 dispatch 方法。
+    middlewares.forEach(middleware =>
+            dispatch = middleware(store)(dispatch)
+    );
+    return Object.assign({}, store, { dispatch })
 }
 applyMiddlewareSimilar(store, n1, n2)
 store.dispatch({type: 'EE'});
 ```
+
+
+
+!!! 未完 待续……
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -348,10 +368,6 @@ store.dispatch({type: 'EE'});
 `sagas`  是一种长事物模型，系统内管理side-effects的途径,  系统中需要协程多个action和side-effects。可以理解成与系统交互的永久线程，就是做了以下三项工作：对中的acion dispach事件做出反应 、dispach新的actions、在没有action被dispath的情况下能够运用内部机制进行自我苏醒
 
 在`redux-sagas`中,saga是一个个的generator函数，能够无限次运行在系统中，当action被dispath 的时候，它能够唤起相应的操作。在项目中主要是结合数据请求进行数据的异步操作。除此之外，他也可以做所有与state相关的异步操作，这样保持视图和action creator 是纯函数
-
-## 
-
-#### 搭建开发环境
 
 ## 
 
@@ -418,19 +434,6 @@ react的是一个以数据驱动的框架，官方为了不让组件过于复杂
 但是当要真正做一个项目应用的时候会发现很多问题。就只是说异步请求数据方面，占了很大的一部分，接口很多，而且用户的很多操作都需要进行数据请求：一个交互需要要进行多个数据请求，这些请求需要是并发，或同步进行，有时需要在请求回来的数据中，在进行state的数据操作，接着可能要继续进行请求。第一反应当然是要优化middleware request.js ,但是要实现着么多种功能需求，一般的参数封装显然是不符合正常的编码思维的。
 
 于是找到了一款优秀的处理异步的框架 redux-sagas.它可以实现上述异步请求数据的需求，之后再把所有的接口请求提取出来，从而实现了代码功能块的分离。
-
-#### redux数据流。
-
-
-
-#### react的组件化思维
-
-1. 介绍react的组件化思路。以基于redux-form写的表单验证功能为实例 。
-
-#### 构建原生应用
-
-1. 以登录登出演示实际的应用场景。
-
 
 
 [技术栈]: https://jasonchen1982.github.io/blog/source/react-native/tech.png	"技术栈"
