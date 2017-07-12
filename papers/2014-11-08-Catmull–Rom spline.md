@@ -13,7 +13,7 @@ author: jason82
 
 ##### 通过控制点的
 
-* [catmull-rom spline](https://en.wikipedia.org/wiki/Centripetal_Catmull%E2%80%93Rom_spline) catmull-rom样条
+* [catmull-rom spline](https://www.cs.cmu.edu/~462/projects/assn2/assn2/catmullRom.pdf) catmull-rom样条
 * [Hermite spline](https://en.wikipedia.org/wiki/Cubic_Hermite_spline) 三次厄尔密样条曲线
 * [lagrange spline](http://www.math.ucla.edu/~baker/149.1.02w/handouts/x_lagrange.pdf) 拉格朗日样条曲线
 * …...
