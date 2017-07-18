@@ -7,7 +7,7 @@ author: jason82
 
 在数学的数值分析这一领域中，样条是一种由多项式分段定义的特殊函数。
 
-样条曲线在图形学中也经常被用到，我们在处理离散数据间插值的时候往往需要用到样条函数来平滑链接已知的一组控制点。非常常见的插值应用就是`beizer curve`在动画中的应用了，除此之外还有非常非常多的不同类型不同适用场景的样条曲线。下面我们将来介绍一些比较常见的样条曲线：
+样条曲线在图形学中也经常被用到，我们在处理离散数据间插值的时候往往需要用到样条函数来平滑链接已知的一组控制点。非常常见的插值应用就是`bezier curve`在动画中的应用了，除此之外还有非常非常多的不同类型不同适用场景的样条曲线。下面我们将来介绍一些比较常见的样条曲线：
 
 样条曲线可以在某种程度上分为两大类，一类是生成的曲线通过控制点、另一类则是生成的曲线不通过控制点。
 
@@ -20,7 +20,7 @@ author: jason82
 
 #####  不通过控制点的
 
-* [beizer spline](https://en.wikipedia.org/wiki/B%C3%A9zier_curve) 贝塞尔样条曲线
+* [bezier spline](https://en.wikipedia.org/wiki/B%C3%A9zier_curve) 贝塞尔样条曲线
 * [B spline](https://en.wikipedia.org/wiki/B-spline) B样条
 * [NURBS](https://en.wikipedia.org/wiki/Non-uniform_rational_B-spline) 非均匀有理B样条
 * …...

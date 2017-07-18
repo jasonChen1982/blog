@@ -1,19 +1,19 @@
 ---
-title: beizer-curve和高阶beizer
+title: bezier-curve和高阶bezier
 date: 2014-11-21
 status: finished
 author: jason82
 ---
 
-上次我们讲到了一个`Catmull–Rom`的样条曲线，这次来聊聊我们最长见也最常挂在嘴边的样条曲线`beizer-curve`。
+上次我们讲到了一个`Catmull–Rom`的样条曲线，这次来聊聊我们最长见也最常挂在嘴边的样条曲线`bezier-curve`。
 
-`beizer-curve`的一般公式是
+`bezier-curve`的一般公式是
 
-![formula-beizer](https://wikimedia.org/api/rest_v1/media/math/render/svg/3e330568539637d3c302301b2a8b5a06a9ec5cad)
+![formula-bezier](https://wikimedia.org/api/rest_v1/media/math/render/svg/3e330568539637d3c302301b2a8b5a06a9ec5cad)
 
 从公式可以看出，该公式具有可递归性。于是我们只需要了解其低阶的运算法则就可以了。
 
-比如我们可以把最低阶的`beizer-curve`作为基础公式，然后在这基础上进行递归。
+比如我们可以把最低阶的`bezier-curve`作为基础公式，然后在这基础上进行递归。
 
 ```javascript
 // t为插值的进度
@@ -21,7 +21,7 @@ var rt = 1 - t;
 var pv = rT * rT * p0 + 2 * t * rT * p1 + t * t * p2;
 ```
 
-这样我们就可以通过函数递归来实现高阶的`beizer`曲线了
+这样我们就可以通过函数递归来实现高阶的`bezier`曲线了
 
 ```javascript
 function getPoint(points, t) {
@@ -49,6 +49,6 @@ function getPoint(points, t) {
 }
 ```
 
-实现了N阶(n > 3)`beizer-curve`之后我们就可以在这基础上实现多种多样的效果，例如下面：
+实现了N阶(n > 3)`bezier-curve`之后我们就可以在这基础上实现多种多样的效果，例如下面：
 
 [motion-path](https://jasonchen1982.github.io/jcc2d/examples/demo_animation_motion/index.html)
