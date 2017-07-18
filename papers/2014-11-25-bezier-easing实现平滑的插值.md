@@ -54,7 +54,11 @@ function Fn(t, duration, start, end) {
 
 用来调整插值比例的曲线有很多种，除了刚才说的`y = x^2`或者`y=sqrt(x)`这些曲线，还有一些其他的数学曲线。例如运用的最为广泛的`cubic-bezier`曲线来实现同样的插值效果，并且插值效果更丰富。
 
-再开始之前我们先来看看`cubic-bezier`曲线长什么样
+再开始之前我们先来看看`cubic-bezier`曲线长什么样：
+
+![y=x^2](https://jasonchen1982.github.io/blog/source/math/cubic-beizer.png)
+
+是不是发现和前面的曲线类似，同样我们以`X轴`作为输入，`Y轴`作为输出的话就能通过在限定的区域内变换控制点从而得到各种形式的插值曲线了。但是由上次讲到的`bezier curve`中我们知道`bezier curve`公式的输入量是进度`t`，然后得到曲线在该处的坐标点`(x, y)`，但是我们这里是希望用`x`作为输入量，然后得到的`y`作为输出量来进行实际的插值。也就是说我们现在的需求是已知`x`想求出`cubic-beizer`曲线上所对应的`y`。
 
 
 
