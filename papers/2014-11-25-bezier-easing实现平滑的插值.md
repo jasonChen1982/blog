@@ -62,3 +62,15 @@ function Fn(t, duration, start, end) {
 
 我们先来看看`cubic-bezier`曲线的公式。前面说了`bezier`曲线的公式是可递归的公式，我们可以根据之前的公式列出`cubic-bezier`曲线的公式。
 
+![bezier](https://jasonchen1982.github.io/blog/source/math/bezier.svg)
+
+这只是普通的`cubic-bezier`曲线的公式，但是我们这里用到的`cubic-bezier`是起始点为`(0, 0)`和结束点为`(1, 1)`的特殊`cubic-bezier`曲线，这样我们就能对公式进行进一步的简化。
+
+```javascript
+B(t) = (1-3*P2+3*P1) * t^3 + (3*P2 - 6P2) * t^2 + (3*P1) * t 
+```
+
+我们知道这里的`t`的含义是一个`[0, 1]`之间的插值进度，但是我们现在的需求是需要通过`X`的值来算出`Y`的值。这样我们就能够通过`cubic-bezier`曲线在这种情况下的`Y`的特性来进行非常丰富的插值了。
+
+
+
