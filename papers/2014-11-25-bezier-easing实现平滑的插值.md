@@ -67,10 +67,141 @@ function Fn(t, duration, start, end) {
 这只是普通的`cubic-bezier`曲线的公式，但是我们这里用到的`cubic-bezier`是起始点为`(0, 0)`和结束点为`(1, 1)`的特殊`cubic-bezier`曲线，这样我们就能对公式进行进一步的简化。
 
 ```javascript
-B(t) = (1-3*P2+3*P1) * t^3 + (3*P2 - 6P2) * t^2 + (3*P1) * t 
+B(t) = (1-3*P2+3*P1) * t^3 + (3*P2 - 6*P2) * t^2 + (3*P1) * t 
 ```
 
-我们知道这里的`t`的含义是一个`[0, 1]`之间的插值进度，但是我们现在的需求是需要通过`X`的值来算出`Y`的值。这样我们就能够通过`cubic-bezier`曲线在这种情况下的`Y`的特性来进行非常丰富的插值了。
+我们知道这里的`t`的含义是一个`[0, 1]`之间的插值进度，但是我们现在的需求是需要通过`X`的值来算出`Y`的值。这样我们就能够通过`cubic-bezier`曲线在这种情况下的`Y`的特性来进行非常丰富的曲线插值了。但是我们可以看到想要求解这个方程并不容易，因此我们可以使用数值研究中常用的方法来求解近似之。
+
+> 高于两阶的一元多次方程目前还都没有求根公式，并且在我们这个公式中曲线是平滑连续的，并且公式的解的值域在[0, 1]之间，可以说我们只要能保证我们猜测的解和实际解在可接受范围内，那么这个方法就是有效的。
+
+如上公式中我们知道的已知量是`P1`、`P2`、`B(t)`的值，需要求解此时的`t`。基于上面的公式我们可以列出这样的程序。
+
+```javascript
+// t^3 的系数
+function A(P1, P2) {
+  return 1.0 - 3.0 * P2 + 3.0 * P1;
+}
+
+// t^2 的系数
+function B(P1, P2) {
+  return 3.0 * P2 - 6.0 * P1;
+}
+
+// t 的系数
+function C(P1) {
+  return 3.0 * P1;
+}
+
+// 公式 B(t) = (1-3*P2+3*P1) * t^3 + (3*P2 - 6*P2) * t^2 + (3*P1) * t 的函数形式
+function calcBezier(t, P1, P2) {
+  return ((A(P1, P2) * t + B(P1, P2)) * t + C(P1)) * t;
+}
+
+// 公式 B(t) = (1-3*P2+3*P1) * t^3 + (3*P2 - 6*P2) * t^2 + (3*P1) * t 的导数
+function getSlope(t, P1, P2) {
+  return 3.0 * A(P1, P2) * t * t + 2.0 * B(P1, P2) * t + C(P1);
+}
+```
+
+为了增加猜测值的效率，我们可以将整个曲线按照`t`分成`N`段，在猜测前先预判断解在哪个区间。
+
+```javascript
+var segement = 10;
+var sampleStep = [];
+for (var i = 0; i <= segement; ++i) {
+  sampleStep[i] = calcBezier(
+    i / segement,
+    P1,
+    P2
+  );
+}
+```
+
+得到`sampleStep`后我们就可以大概的判断解的区间范围，并且顺带在区间内做一次线性插值。
+
+```javascript
+function preGuessT(X) {
+  var t = 0;
+  for (var i = 0; i < segement; i++) {
+    var step = sampleStep[i];
+    if (x < step) {
+      var segStep = 1 / segement;
+      var base = i * segStep; // 区间的下边界
+      var aBit = segStep * (x - step) / (sampleStep[i+1] - sampleStep[i]); // 多出来的部分进行插值
+      t = base + aBit; // 区间的下边界 ＋ 插值
+    }
+  }
+}
+```
+
+这样一来得到的解和实际解之间的误差一般能小于`0.01`，接下来我们再利用一些方法逼近一下就能得到误差更小的解了。
+
+这里我们要介绍的就是`牛顿拉弗森迭代法`，该方法是一个结合连续平滑曲线的斜率来逼近拟合方程解的方法。不过这里不会进行详细讲解，有兴趣的可以查看这里[Newton](https://en.wikipedia.org/wiki/Newton%27s_method)。但是要注意的是，我们这里使用的是该方法的一个变形，原理相似。
+
+> `牛顿拉弗森迭代法`的主要思想就是通过猜测一个解，然后利用曲线在该猜测解处的切线与`解轴`的交点得到下一个猜测解，如果我们能够保证猜测解就在实际解的附近并且此处区域曲线二阶导可导且不变号，该方程经过多次迭代计算之后一定收敛与实际解。从此可以看出`牛顿拉弗森迭代法`的使用还是有一些限制的。
+
+虽然`牛顿拉弗森迭代法`的使用有一些限制，但是我们可以在能确保快速收敛的区间使用`牛顿拉弗森迭代法`，其他特俗区间使用普适的方法。毕竟`cubic-bezier`大部分情况满足`牛顿拉弗森迭代法`收敛的情况。
+
+`牛顿拉弗森迭代法`的迭代公式：
+
+```javascript
+X1 = X0 - F(X0)/F`(X0);
+```
+
+我们进行变形得：
+
+```jade
+N(t) = B(t) - X0;
+
+// 代入迭代公式
+t1 = t0 - N(t)/N`(t)
+
+t1 = t0 - (B(t) - X0) / B`(t)
+```
+
+代码实现如下：
+
+```javascript
+function newtonRaphsonIterate(X0, guessT, mX1, mX2) {
+  for (let i = 0; i < 4; ++i) {
+    let currentSlope = getSlope(guessT, mX1, mX2);
+    if (currentSlope === 0.0) {
+      return guessT;
+    }
+    let currentX = calcBezier(guessT, mX1, mX2) - X0;
+    guessT -= currentX / currentSlope;
+  }
+  return guessT;
+}
+```
+
+当不符合收敛条件或者不能确保收敛条件时使用普通的方法，例如二分法逼近实际解。
+
+```javascript
+function binarySubdivide(aX, aA, aB, mX1, mX2) {
+  let currentX;
+  let currentT;
+  let i = 0;
+  do {
+    currentT = aA + (aB - aA) / 2.0;
+    currentX = calcBezier(currentT, mX1, mX2) - aX;
+    if (currentX > 0.0) {
+      aB = currentT;
+    } else {
+      aA = currentT;
+    }
+  } while (
+    Math.abs(currentX) > 0.00000001
+    &&
+    ++i < 10
+  );
+  return currentT;
+}
+```
+
+最终我们利用这些方法就可以通过`js`实现插值，这个方法在我的[jcc2d](https://github.com/jasonChen1982/jcc2d)引擎里面也有用到[JC.Tween.Base](https://jasonchen1982.github.io/jcc2d/examples/#demo_animation_bezier)
+
+
 
 
 
