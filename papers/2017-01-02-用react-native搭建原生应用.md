@@ -4,8 +4,25 @@ date: 2017-01-02
 status: doing
 author: https://github.com/woshi82
 ---
-
-
+## 目录
+- [前言](#前言)
+- [文件结构](#文件结构)
+- [事例演示](#事例演示)
+- [构建react-native应用的技术栈](#构建react-native应用的技术栈)
+  - [React-native](#React-native)
+  - [React](#React)
+  - [React](#React)
+  - [Redux](#Redux)  
+     - [3个模块](#3个模块)
+     - [middleware](#middleware)
+     - [异步action](#异步action)
+  - [Sagas](#Sagas)  
+  - [Redux-saga](#Redux-saga)  
+  - [React-redux](#React-redux)  
+  - [React-persist](#React-persist)  
+[Redux数据流](#Redux数据流)  
+- [React的组件化思维之一HOC](#React的组件化思维之一HOC)  
+- [React-native的利弊](#React-native的利弊)  
 
 ## 前言
 
@@ -299,18 +316,296 @@ function applyMiddlewareSimilar(store, ...middlewares) {
     let dispatch = store.dispatch;
     // 在每一个 middleware 中变换 dispatch 方法。
     middlewares.forEach(middleware =>
-            dispatch = middleware(store)(dispatch)
+        dispatch = middleware(store)(dispatch)
     );
     return Object.assign({}, store, { dispatch })
 }
 applyMiddlewareSimilar(store, n1, n2)
 store.dispatch({type: 'EE'});
 ```
+在这里再抛出一个问题： 在中间件中调用next和store.dispatch的区别?
+> store.dispatch是整个middleware链的集合。next是上一次middleware的dispatch.所以在middleware中如果想dispath一个新的action，必然是调用store.dispatch(而不是next),这样就可以实现被dispath的action能够重新遍历整middleware树，避免middleware处理的遗漏处理。
+ 
+##### 柯里化
 
+在实际编码中，函数嵌套函数，函数中返回函数的写法特别繁琐，我们可以巧妙地运用ES6语法的箭头函数进行柯里化的书写方式。
+```javascript
+store => next => action => {
+    if(typeof action == 'function'){
+        action(store, next)
+    }else {
+        next(action)
+    }
+}
+```
+##### applyMiddleware
+applyMiddleware是redux提供的一个接口，可接收注入多个middleware,在实际开发中经常用到。`applyMiddleware(thunk, logger)`
+#### 异步action
+异步action在项目制作中经常用到，可以处理很多异步的问题，比如说异步的数据请求。这里演示一个专门用于处理异步请求数据的middleware,可以快捷的dispatch一个action去处理异步请求。
+```javascript
+// action.js
+var newsList = ({newsId,url,page})=> {
+	return {
+		types: [LOAD_NEWS_REQUEST,LOAD_NEWS_SUCCESS, LOAD_NEWS_FAILURE],
+		callAPI: () => fetch(`http://www.test.com/${url}&page=${page}`),
+		shouldCallAPI: (state) => {
+			const datas = state.newsList[newsId];
+			if (datas && !!datas.isFetching) return false;
+			return true;
+		},
+		payload: {newsId,page}
+	}
+}
+// request.js
+module.exports = ({ dispatch, getState }) => next => action => {
+    const {
+        types,
+        callAPI,
+        shouldCallAPI = () => true,
+        payload = {}
+    } = action;
+    if (!types) {
+        return next(action);
+    }
+    if (!shouldCallAPI(getState())) {
+        return;
+    }
+    const [requestType, successType, failureType] = types;
+    dispatch([{
+        ...payload,
+        type: requestType
+    }, networkIndicator(true)])
+    return callAPI().then(
+        response => {
+            response.json().then(function(response){
+                dispatch([{
+                        ...payload,
+                        type: successType,
+                        response: response,
+                        page: payload.page+1
+                },networkIndicator(false)]);
+            });
+        },
+        error => {
+            dispatch([{
+                    ...payload,
+                    type: failureType,
+                    error: error,
+                    supPayload
+            }, networkIndicator(false)]);
+        }
+    );
+}
+```
+到这里我们已经解决了一个应用开发中的数据模块处理，和异步处理。但是从编码角度上看，显得有些繁琐、冗余。所以是否可以再进行优化一下呢？比如说：
+1. 是否能够把整个应用请求的服务接口进行一个统一的处理，而不是把每个接口分散在各个功能里面进行单独处理。
+    * 统一管理一个应用的接口，方便复用。
+    * 每个接口请求的方式和请求头可能会不一样，能够统一配置会简单一些。
+2. 接口请求如何优雅地时间请求并行、请求串行。
+所以我们可以很好的引入Sagas,进一步对代码优化。
+### Sagas
+Sagas是从其他领域引入的长事务管理模型思路。是管理程序中side-effects的一种途径。在应用系统中需要协程多个action和side-effects，sagas可以理解成与系统交互的永久线程。
+它主要有以下功能。
+1. 对acion dispach事件做出反应 
+2. dispach新的actions
+3. 在没有action被dispath的情况下能够运用内部机制进行自我苏醒
 
+#### Redux-saga
+在react-native应用中可以巧妙引入sagas思维，所以可以引用redux-saga中间件。在redux-saga中，saga是generator函数。generator是协程的一种。 
+协程：多个线程并行执行，只有一个线程处于执行状态，其它线程处于暂停态，线程之间可以交换执行权（一个线程执行到一半可以暂停执行，将执行权交给另一个线程，等稍后收回执行权的时候，再恢复执行）
 
-!!! 未完 待续……
+协程是同时存在多个栈，但只有一个栈是在运行状态，也就是说，协程是以多占用内存为代价，实现多任务的并行.
+但是我们都知道js是单线程运行的，所以js中的协程多线程对应的就是多个函数。多个函数并行执行，只有一个函数处于执行的执行状态，其他函数处于暂停状态。
+在redux-saga 中对generator进行了封装，使得它能够自执行，在进行一次next 操作后，会将整个线程进行挂起，等待value的返回值，获取返回值之后执行下一个next.所以我们可以对异步操作进行一个同步化的表达。
+```javascript
+function* loadLogin() {
+    const params = yield select(getLoginInfo);
+    yield call(fetchEntity, loginSagasAc, api.fetchLogin, params, function* (response) {
+        yield put(user({ isLogin: true, info: response.data.info}));
+        yield put(loginSagasAc.success());
+    });
+}
 
+var loadLoginHandler = loadLogin();
+loadLoginHandler.next();  // {value: xxx, done: false}
+```
+### React-redux
+React-redux能够快速的将redux注入到应用中。最原始的操作是利用react数据自上而下的流动方式，一层层将数据通过props从父级传递到子级。这样的流程显得非常的繁琐。react-redux利用react高阶组件（HOC）思维,能够将数据快速注入到应用中，并进行一些操作。主要用到的是 `Privide`、`Connect`接口。
+```javascript
+// LoginSagas.js
+connect(
+(state) => {
+    const { account } = this,state;
+    return {
+    userData: account.user,
+    loginData: account.login,
+    };
+},
+(dispatch) => {
+    return {
+    loginReq: (obj) => {
+        dispatch(loginSagasAc.request(obj));
+    },
+    };
+})(LoginSagas);
+
+```
+
+### React-persist
+React-persist是一个在RN应用中进行数据持久化的中间件，在应用开发中，主要用了react-native提供的AsyncStorage进行数据持久化。
+```javascript
+const enhancer = compose(
+  autoRehydrate(),
+);
+const store = createStore(
+  reducers,
+  {},
+  enhancer,
+);
+export default configureStore(onComplete) {
+  persistStore(store, { storage: AsyncStorage }, onComplete);
+
+  if (isDebuggingInChrome) {
+    window.store = store;
+  }
+  return store;
+}
+```
+## Redux数据流
+在iuwei事例APP中的登录的数据store结构大致如下图所示：
+![store数据][store数据]
+![Redux数据流][Redux数据流]
+以下是一个完整的redux数据流的例子：
+```javascript
+<!--store配置-->
+const sagaMiddleware = createSagaMiddleware({ sagaMonitor });
+
+const enhancer = compose(
+  autoRehydrate(),
+  applyMiddleware(sagaMiddleware, thunk, logger),
+);
+const store = createStore(
+  reducers,
+  {},
+  enhancer,
+);
+sagaMiddleware.run(rootSaga);
+
+function configureStore(onComplete) {
+  // TODO: 建议开始把redux-persist关闭，因为它会对state进行缓存，可能对于一些state对象调试不是很方便
+  persistStore(store, { storage: AsyncStorage }, onComplete);
+
+  if (isDebuggingInChrome) {
+    window.store = store;
+  }
+  return store;
+}
+<!--store注入到根组件-->
+<Provider store={this.state.store}>
+    <App />
+</Provider>
+<!--在LoginSagas组件中注入redux-->
+export default connect(
+  (state) => {
+    return {
+      userData: state.account.user,
+    };
+  },
+  (dispatch) => {
+    return {
+      loginReq: (obj) => {
+        dispatch(loginSagasAc.request(obj));
+      },
+    };
+  })(LoginSagas);
+<!--onPress-->
+loginHandler = () => {
+this.props.loginReq({
+    username: this.username._lastNativeText,
+    password: this.password._lastNativeText
+});
+}
+<!--监听数据变化-->
+componentWillReceiveProps (nextProps) {
+    const { loginData } = nextProps;
+    if (this.props.loginData.isFetching && loginData.isFetching){
+      if (loginData.status === 0){
+        nextProps.userData.isLogin && this.props.navigator.push({
+          name: 'TabsView',
+          component: TabsView,
+          params: {
+            iTab: 1,
+          }
+        });
+      } else if (loginData.status === -1){
+        this.setState({
+          error: '网络错误',
+        });
+      } else {
+        this.setState({
+          error: loginData.message,
+        });
+      }
+
+    }
+  }
+<!--action.js-->
+  export const loginSagasAc = {
+	request: data => action(LOGINSAGAS.REQUEST, { ...data }),
+	success: () => action(LOGINSAGAS.SUCCESS),
+	failure: error => action(LOGINSAGAS.FAILURE, { error }),
+};
+<!-- type.js -->
+const REQUEST = 'REQUEST';
+const SUCCESS = 'SUCCESS';
+const FAILURE = 'FAILURE';
+
+function createRequestTypes(base) {
+	return [REQUEST, SUCCESS, FAILURE].reduce((acc, type) => {
+		acc[type] = `${base}_${type}`;
+		return acc;
+	}, {});
+}
+export const LOGINSAGAS = createRequestTypes('LOGINSAGAS');
+
+<!--action creater-->
+export const action = (type, payload = {}) => {
+	return { type, ...payload };
+};
+<!--account.js-->
+export default combineReducers({
+	...
+	login: commonRequest(LOGINSAGAS),
+});
+<!--sagas-->
+function* loadLogin() {
+	const params = yield select(getLoginInfo);
+	yield call(fetchEntity, loginSagasAc, api.fetchLogin, params, function* (response) {
+		yield put(user({ isLogin: true, info: response.data.info}));
+		yield put(loginSagasAc.success());
+	});
+}
+
+export default function* watchAccount() {
+	yield takeLatest(LOGINSAGAS.REQUEST, loadLogin);
+}
+```
+## React的组件化思维之一: HOC
+主要以在实际项目开发中已表单验证功能来讲述HOC思维的运用。
+### React的组件化思维
+在react社区中有人总结了很多组件化思维、解决方案，可以很好的运用在实际的应用中：
+1. pure render component
+2. HOC component
+3. render logic
+4. Context
+5. Utility Methods
+### 表单验证需求
+1. 实时验证
+2. 自定义错误的显示
+3. 自定义配置表单验证
+首先第一想法是在github上搜索相关的组件，最后得到两个组件比较适合运用在开发中react-native-gifted-form、react-native-clean-form，为了满足功能需求，阅读源码，发现编码思维可以借鉴，但是里面用了react快要被遗弃的mixins语法。这样对整个组件改动很大，最后还是决定自己写一个表单验证的组件。
+### 理想实现
+### 最后封装
 
 
 
@@ -343,7 +638,7 @@ store.dispatch({type: 'EE'});
 
 3. 对原生的API支持还有限，IOS和android上用的属性或API可能会不同：onkeypress、letterspace,如果一定要用，需要修改源码，并编译。有一些原生功能也可以查找第三方插件：camera、 
 
-4. 动画是卡顿的，有些机型表现不一样，需要深入的优化。
+4. 动画是略卡顿的，有些机型表现不一样，需要深入的优化。
 
 5. 还是需要掌握一些原生的东西：打包、打包配置、写一些自定义的原生功能。
 
@@ -355,19 +650,6 @@ store.dispatch({type: 'EE'});
 
 
 
-
-
-视图和数据是应用开发中两个很重要的组成部分，其中数据处理的方式影响了整个应用性能， 因此在 `iuwei`中 借助 `redux`  （对比flux），一个高效处理数据逻辑并更新的框架，进行 **前端数据库**的构建 , 处理数据逻辑。
-
-`redux-persist` 能够持久化数据的 redux 中间件，在应用中通过 **数据本地存储** ,进行数据持久话。
-
-`redux-thunk` `redux-promise` 是  的中间件，相比于vuex..
-
-前面说到的 redux是可以结合许多前端界面库一起应用在项目中。 其中在react中，官方推崇 `react-redux`  对 redux进行相互绑定。它运用 react 高阶组件的思维，将redux快速注入到项目中。
-
-`sagas`  是一种长事物模型，系统内管理side-effects的途径,  系统中需要协程多个action和side-effects。可以理解成与系统交互的永久线程，就是做了以下三项工作：对中的acion dispach事件做出反应 、dispach新的actions、在没有action被dispath的情况下能够运用内部机制进行自我苏醒
-
-在`redux-sagas`中,saga是一个个的generator函数，能够无限次运行在系统中，当action被dispath 的时候，它能够唤起相应的操作。在项目中主要是结合数据请求进行数据的异步操作。除此之外，他也可以做所有与state相关的异步操作，这样保持视图和action creator 是纯函数
 
 ## 
 
@@ -445,4 +727,7 @@ react的是一个以数据驱动的框架，官方为了不让组件过于复杂
 [react-native官网文档]: http://facebook.github.io/react-native/docs/getting-started.html	"react-native官网文档"
 [中文文档]: http://reactnative.cn/docs/0.44/getting-started.html	"中文文档"
 [react文档]: https://facebook.github.io/react/docs/hello-world.html	"react文档"
+[store数据]: https://jasonchen1982.github.io/blog/source/react-native/login-store.png	"store数据"
+[Redux数据流]: https://jasonchen1982.github.io/blog/source/react-native/login-flow.png	"Redux数据流"
+
 
