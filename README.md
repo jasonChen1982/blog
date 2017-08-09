@@ -11,6 +11,7 @@
 ### Papers of 2016
 
 - [x] [lighthouse使用记录](https://github.com/jasonChen1982/blog/blob/master/papers/2016-12-23-lighthouse%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95.md)
+- [x] [rollup使用记录](https://github.com/jasonChen1982/blog/blob/master/papers/2016-06-10-rollup%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95.md)
 - [x] [ES6-Module标准使用](https://github.com/jasonChen1982/blog/blob/master/papers/2016-04-11-ES6-Module%E6%A0%87%E5%87%86%E4%BD%BF%E7%94%A8.md)
 
 ### Papers of 2015
