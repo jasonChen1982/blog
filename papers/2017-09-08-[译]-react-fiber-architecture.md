@@ -1,7 +1,7 @@
 ---
 title: [译]react-fiber-architecture
-date: 2017-09-8
-status: finish
+date: 2017-09-08
+status: finished
 ---
 
 原文：https://github.com/acdlite/react-fiber-architecture
