@@ -7,7 +7,7 @@ author: jason82
 
 在数学的数值分析这一领域中，样条是一种由多项式分段定义的特殊函数。
 
-样条曲线在图形学中也经常被用到，我们在处理离散数据间插值的时候往往需要用到样条函数来平滑链接已知的一组控制点。非常常见的插值应用就是`bezier curve`在动画中的应用了，除此之外还有非常非常多的不同类型不同适用场景的样条曲线。下面我们将来介绍一些比较常见的样条曲线：
+样条曲线在图形学中也经常被用到，我们在处理离散数据间插值的时候往往需要用到样条函数来平滑连接已知的一组控制点。最常见的插值应用就是`bezier curve`在动画中的应用了，除此之外还有非常非常多的不同类型不同适用场景的样条曲线。下面我们将来介绍一些比较常见的样条曲线：
 
 样条曲线可以在某种程度上分为两大类，一类是生成的曲线通过控制点、另一类则是生成的曲线不通过控制点。
 
@@ -25,11 +25,11 @@ author: jason82
 * [NURBS](https://en.wikipedia.org/wiki/Non-uniform_rational_B-spline) 非均匀有理B样条
 * …...
 
-今天我们要讲的就是`catmull-rom`曲线，由于其能够经过控制点的这一特性，所以经常被用在平滑路径生成上。样条曲线是指从给定的一组控制点而得到一条曲线，曲线的大致形状由这些点予以控制。
+今天我们要讲的就是`catmull-rom`曲线，由于其能够经过控制点的这一特性，所以经常被用来实现类似自动路径规划的功能上。样条曲线是指从给定的一组控制点而得到一条曲线，曲线的大致形状由这些点予以控制。
 
 > 样条曲线一般可分为插值样条和逼近样条两种，插值样条通常用于数字化绘图或动画的设计，逼近样条一般用来构造物体的表面。[reference](http://www.cnblogs.com/WhyEngine/p/4020390.html)
 
-我们本次讨论的只是`catmull-rom`众多变形实现中的一种，公式如下:
+我们本次讨论的只是`catmull-rom`众多实现中的一种，公式如下:
 
 ```javascript
 var tension = 0.5;
@@ -55,7 +55,19 @@ function CatmullRom(p0, p1, p2, p3, t, tension) {
 后续我们就只需要将数据往该公式里面套就好了。
 
 ```javascript
-function getPoint(v, k) {
+function getPoint(points, k) {
+  var cmps = Object.keys(points[0]);
+  var point = {};
+  cmps.forEach(function(cmp) {
+    var values = points.map(function(vec) {
+      return vec[cmp];
+    });
+    point[cmp] = getCmp(values, k);
+  });
+  return point;
+}
+
+function getCmp(v, k) {
     var m = v.length - 1;
     var f = m * k;
     var i = Math.floor(f);
@@ -88,10 +100,13 @@ var points = [
   { x: -50, y: 0 },
 ];
 
-var point = {
-  x: getPoint([ points[0].x, points[1].x, points[2].x, points[3].x, points[4].x, ], 0.5, 0.5),
-  y: getPoint([ points[0].y, points[1].y, points[2].y, points[3].y, points[4].y, ], 0.5, 0.5),
-};
+var point = getPoint(points, 0.5);
 ```
 
-这样我们就得到了`points`的在`0.5`处的插值结果。
+这样我们就得到了`points`样条使用`CatmullRom`方式在`0.5`插值进度处的插值结果。
+
+通过进一步的封装我们可以实现一个沿着指定路径运动的动画
+
+![CatmullRom-motion](https://jasonchen1982.github.io/blog/source/images/catmullrom.gif)
+
+[查看实例](https://jasonchen1982.github.io/jcc2d/examples/#demo_animation_motion)
